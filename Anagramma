@@ -1,0 +1,44 @@
+using System;
+
+namespace ConsoleApp1
+{
+    class Program
+    {
+        static string Replace(string s)
+        {
+            var charsToRemove = new string[] { " " };
+            foreach (var c in charsToRemove)
+            {
+                s = s.Replace(c, string.Empty);
+            }
+            return s;
+        }
+        static void Main()
+        {
+            string s1 = Console.ReadLine();
+            string s2 = Console.ReadLine();
+            s1 = Replace(s1);
+            s2 = Replace(s2);
+            s1 = s1.ToLower();
+            s2 = s2.ToLower();
+            for (int i = 0; i < s1.Length; i++)
+            {
+                for (int j = 0; j < s2.Length; j++)
+                {
+                    if (s1[i] == s2[j])
+                    {
+                        s2 = s2.Remove(j, 1);   
+                    }
+                }
+            }
+            if (s2.Length == 0)
+            {
+                Console.WriteLine("yes");
+            }
+            else
+            {
+                Console.WriteLine("no");
+            }
+        }
+    }
+}
