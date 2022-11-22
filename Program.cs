@@ -1,8 +1,9 @@
 ﻿using System;
-using System.ComponentModel;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.Diagnostics.Metrics;
-using System.Security.AccessControl;
-using Класс_точек_и_четырехугольников;
+using System.Net.Http.Headers;
+using Класс_матриц;
 
 namespace ConsoleApp1
 {
@@ -10,100 +11,98 @@ namespace ConsoleApp1
     {
         static void Main()
         {
-            Point A = new Point (1, 4);
-            Point B = new Point (1, 1);
-            Point C = new Point (4, 1);
-            Point D = new Point (4, 4);
-            Point E = new Point(5, 4);
-            Point F = new Point(5, 2);
-            Point G = new Point(7, 2);
-            Point H = new Point(7, 4);
-            Quadrilateral Q = new Quadrilateral(A, B, C, D);
-            Console.WriteLine("1. Площадь 4-угольника");
-            Console.WriteLine("2. Периметр 4-угольника");
-            Console.WriteLine("3. Длины диагоналей 4-угольника");
-            Console.WriteLine("4. Проверить является ли выпуклым");
-            Console.WriteLine("5. Узнать пересекаются ли два 4-угольника");
-            Console.WriteLine("6. Лежит ли один внутри другого");
-            Console.WriteLine("7. Является ли фигура квадратом/ромбом/прямоуг/параллелограммом/трапеция");
+            //Matrix M = new Matrix(2, 2);
+            //M.ShowMatrix();
+            //Console.WriteLine();
+            //Matrix Z = new Matrix(3, 3, '0');
+            //Z.ShowMatrix();
+            //Console.WriteLine();
+            //Matrix R = new Matrix(3, 3, 1, 10);
+            //R.ShowMatrix();
+            //Console.WriteLine();
+            //Matrix F = new Matrix("Matrix.txt");
+            //F.ShowMatrix();
+            Console.WriteLine("1. Умножение матрицы на константу");
+            Console.WriteLine("2. Деление матрицы на константу");
+            Console.WriteLine("3. Cложение матриц");
+            Console.WriteLine("4. Вычитание матриц");
+            Console.WriteLine("5. Умножение матриц с проверкой размерностей");
+            Console.WriteLine("6. Транспонирование матрицы");
+            Console.WriteLine("7. Вывод элемента матрицы");
             Console.WriteLine("Введите номер задачи: ");
             int n = Convert.ToInt32(Console.ReadLine());
+            Console.WriteLine();
             switch (n)
             {
                 case 1:
-                    Q.Square();
+                    Matrix R = new Matrix(3, 3, 1, 10);
+                    R.ShowMatrix();
+                    Console.WriteLine();
+                    Console.WriteLine("Введите константу:");
+                    int c = Convert.ToInt32(Console.ReadLine());
+                    R.Multiplication_by_scalar(c);
                     break;
                 case 2:
-                    Q.Perimeter();
+                    Matrix R1 = new Matrix(3, 3, 1, 10);
+                    R1.ShowMatrix();
+                    Console.WriteLine();
+                    Console.WriteLine("Введите константу:");
+                    int c1 = Convert.ToInt32(Console.ReadLine());
+                    R1.Division_by_scalar(c1);
                     break;
                 case 3:
-                    Q.Diagonals();
+                    Matrix R2 = new Matrix(3, 3, 1, 10);
+                    R2.ShowMatrix();
+                    Console.WriteLine("+");
+                    Matrix R3 = new Matrix(3, 3, 1, 10);
+                    R3.ShowMatrix();
+                    Console.WriteLine();
+                    Console.WriteLine("Результат:");
+                    R2.Matrix_addition(R3);
                     break;
                 case 4:
-                    if (Q.Type_of_quadrilateral() == 0)
-                    {
-                        Console.WriteLine("Выпуклый");
-                    }
-                    else
-                    {
-                        Console.WriteLine("Невыпуклый");
-                    }
+                    Matrix R4 = new Matrix(3, 3, 1, 10);
+                    R4.ShowMatrix();
+                    Console.WriteLine("-");
+                    Matrix R5 = new Matrix(3, 3, 1, 10);
+                    R5.ShowMatrix();
+                    Console.WriteLine();
+                    Console.WriteLine("Результат:");
+                    R4.Matrix_subtraction(R5);
                     break;
                 case 5:
-                    Point[] Q1array = { A, B, C, D, A };
-                    Point[] Q2array = { E, F, G, H, E };
-                    int count = 0;
-                    for (int i = 0; i < Q1array.Length - 1; i++)
-                    {
-                        for (int j = 0; j < Q2array.Length - 1; j++)
-                        {
-                            if (Q1array[i].Sign_of_Point(Q2array[j], Q2array[j + 1]) * Q1array[i + 1].Sign_of_Point(Q2array[j], Q2array[j + 1]) < 0 && Q2array[j].Sign_of_Point(Q1array[i], Q1array[i + 1]) * Q2array[j + 1].Sign_of_Point(Q1array[i], Q1array[i + 1]) < 0)
-                            {
-                                count++;
-                            }
-                        }
-                    }
-                    if (count != 0)
-                    {
-                        Console.WriteLine("Пересекаются");
-                    }
-                    else
-                    {
-                        Console.WriteLine("Не пересекаются");
-                    }
+                    Console.WriteLine("Введите первую матрицу:");
+                    Matrix M = new Matrix(4, 4);
+                    Console.WriteLine();
+                    Console.WriteLine("Введите вторую матрицу:");
+                    Matrix M1 = new Matrix(4, 4);
+                    Console.WriteLine();
+                    M.ShowMatrix();
+                    Console.WriteLine("*");
+                    M1.ShowMatrix();
+                    Console.WriteLine();
+                    Console.WriteLine("Результат:");
+                    M.Matrix_multiplication(M1);
                     break;
                 case 6:
-                     Point[] Qarray = { A, B, C, D, A };
-                     int count1 = 0;
-                     for (int i = 0; i < Qarray.Length - 1; i++)
-                     {
-                         int e = E.Sign_of_Point(Qarray[i], Qarray[i + 1]);
-                         int f = F.Sign_of_Point(Qarray[i], Qarray[i + 1]);
-                         int g = G.Sign_of_Point(Qarray[i], Qarray[i + 1]);
-                         int h = H.Sign_of_Point(Qarray[i], Qarray[i + 1]);
-                         if (e + f + g + h != 4 && e + f + g + h != -4)
-                         {
-                             count1++;
-                         }
-                     }
-                     if (count1 != 0)
-                     {
-                         Console.WriteLine("Не лежит");
-                     }
-                     else
-                     {
-                         Console.WriteLine("Лежит");
-                     }
+                    Matrix R6 = new Matrix(2, 3, 1, 10);
+                    R6.ShowMatrix();
+                    Console.WriteLine();
+                    Console.WriteLine("Результат:");
+                    R6.Matrix_transposition();
                     break;
                 case 7:
-                    if (Q.Type_of_quadrilateral() == 0)
-                    {
-                        Q.Type_of_figure();
-                    }
-                    else
-                    {
-                        Console.WriteLine("Четырехугольник невыпуклый");
-                    }
+                    Matrix R7 = new Matrix(3, 3, 1, 10);
+                    R7.ShowMatrix();
+                    Console.WriteLine();
+                    Console.WriteLine("Введите индекс строки:");
+                    int i = Convert.ToInt32(Console.ReadLine());
+                    Console.WriteLine();
+                    Console.WriteLine("Введите индекс столбца:");
+                    int j = Convert.ToInt32(Console.ReadLine());
+                    Console.WriteLine();
+                    Console.WriteLine("Результат:");
+                    R7.Output_of_the_matrix_element(i, j);
                     break;
             }
         }
